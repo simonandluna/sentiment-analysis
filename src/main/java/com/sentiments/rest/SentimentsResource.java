@@ -30,22 +30,22 @@ public class SentimentsResource {
     @GET
     @Produces(value = MediaType.APPLICATION_JSON)
     public List<Result> sentiments(@QueryParam("searchKeywords") String searchKeywords) {
-        List<Result> results = new ArrayList<>();
+        List<Result> results = new ArrayList<Result>();
         if (searchKeywords == null || searchKeywords.length() == 0) {
             return results;
         }
 
-        Set<String> keywords = new HashSet<>();
+        Set<String> keywords = new HashSet<String>();
         for (String keyword : searchKeywords.split(",")) {
             keywords.add(keyword.trim().toLowerCase());
         }
         if (keywords.size() > 3) {
-            keywords = new HashSet<>(new ArrayList<>(keywords).subList(0, 3));
+            keywords = new HashSet<String>(new ArrayList<String>(keywords).subList(0, 3));
         }
         for (String keyword : keywords) {
             List<Status> statuses = twitterSearch.search(keyword);
             System.out.println("Found statuses ... " + statuses.size());
-            List<TweetWithSentiment> sentiments = new ArrayList<>();
+            List<TweetWithSentiment> sentiments = new ArrayList<TweetWithSentiment>();
             for (Status status : statuses) {
                 TweetWithSentiment tweetWithSentiment = sentimentAnalyzer.findSentiment(status.getText());
                 if (tweetWithSentiment != null) {
