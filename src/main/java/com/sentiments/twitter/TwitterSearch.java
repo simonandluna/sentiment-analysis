@@ -22,7 +22,7 @@ public class TwitterSearch {
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
         Query query = new Query(keyword + " -filter:retweets -filter:links -filter:replies -filter:images");
-        query.setCount(20);
+        query.setCount(200);
         query.setLocale("en");
         query.setLang("en");;
         try {
